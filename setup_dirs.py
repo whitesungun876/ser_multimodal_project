@@ -2,11 +2,10 @@ import os
 
 project_dirs = [
     "notebooks",
-    "data/raw",
-    "data/processed",
     "src/data_preprocessing/audio",
     "src/data_preprocessing/text",
     "src/data_preprocessing/fusion",
+    "src/datasets",
     "src/feature_extraction/audio",
     "src/feature_extraction/text",
     "src/models/audio",
@@ -19,4 +18,6 @@ project_dirs = [
 
 for d in project_dirs:
     os.makedirs(d, exist_ok=True)
-    open(os.path.join(d, "__init__.py"), "a").close()
+    init_path = os.path.join(d, "__init__.py")
+    with open(init_path, "a") as f:
+        pass  
