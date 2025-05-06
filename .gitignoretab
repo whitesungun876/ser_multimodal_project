@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Datasets and audio features
+*.zip
+data/mel_spectrograms/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.env
+*.pt
+data/iemocap_subset.zip
