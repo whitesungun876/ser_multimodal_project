@@ -5,7 +5,7 @@ import numpy as np
 import soundfile as sf
 from tqdm import tqdm
 
-CSV_PATH = "/Users/whitesungun/Desktop/ser_multimodal_project/ser_multimodal_project/data/iemocap_4emo.csv"
+CSV_PATH = "/Users/whitesungun/Desktop/ser_multimodal_project/ser_multimodal_project/data/iemocap_labels.csv"
 SAVE_DIR = "/Users/whitesungun/Desktop/ser_multimodal_project/ser_multimodal_project/data/mel_spectrograms"
 os.makedirs(SAVE_DIR, exist_ok=True)
 
