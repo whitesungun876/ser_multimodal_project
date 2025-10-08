@@ -1,83 +1,149 @@
-# Speech Emotion Recognition
+🎧 Speech Emotion Recognition (SER)
 
-## Overview
+A PyTorch-based framework for classifying speech signals into emotion categories (e.g., happy, sad, angry, neutral).
+It integrates both traditional acoustic features (MFCC, eGeMAPS/eSAC) and modern deep learning architectures (CNN–RNN, Conformer, MemoCMT, MTAF).
+The system supports multiple public datasets and provides a unified pipeline for extending to custom data.
 
-A PyTorch-based system for classifying speech into emotion categories (e.g., happy, sad, angry, neutral). Combines traditional acoustic features (MFCC, eGeMAPS/eSAC) with modern deep learning models (CNN–RNN, Conformer, MemoCMT, MTAF). Supports multiple public datasets and easy extension to custom data.
+🚀 Key Features
+🗂 Datasets
 
-## Features
+Pre-integrated: EMOVO, EMODB, German Emotional Speech
 
-* **Datasets**: EMOVO, EMODB, German Emotional Speech; add your own via a standardized format.
-* **Features**: MFCC, eGeMAPS/eSAC, spectrograms; data augmentation with SpecAugment variants.
-* **Models**:
+Easy to extend — add new datasets using a standardized format (labels.csv + audio folder)
 
-  * CNN–RNN hybrid
-  * Conformer (Conv-augmented Transformer)
-  * Memory-augmented Cross-Modal Transformer (MemoCMT)
-  * Multimodal Transformer Fusion (MTAF)
-* **Evaluation**: Compare features (eGeMAPS vs. eSAC), cross-corpus transfer, minority-class recall.
+🎵 Acoustic Features
 
-## Repo Structure
+MFCC, eGeMAPS/eSAC, Spectrograms
 
+Augmentation: SpecAugment and its variants for robust training
+
+🧠 Models
+
+cnn_rnn: CNN–RNN hybrid
+
+conformer: Convolution-augmented Transformer
+
+memocmt: Memory-augmented Cross-Modal Transformer
+
+mtaf: Multimodal Transformer Attention Fusion
+
+📊 Evaluation & Analysis
+
+Compare feature sets (e.g., eGeMAPS vs eSAC)
+
+Cross-corpus generalization and transfer learning
+
+Minority-class recall and emotion confusion analysis
+
+🏗 Repository Structure
 speech-emotion-recognition/
-├── data/                   # Raw and processed datasets
-├── features/               # Feature extraction scripts
-├── models/                 # Model definitions and training code
-├── utils/                  # Data loaders, metrics, augmentations
-├── configs/                # YAML/JSON hyperparameter files
-├── logs/                   # TensorBoard logs
-├── checkpoints/            # Saved model weights
-├── requirements.txt        # Dependencies
-├── train.py                # Training script
-├── evaluate.py             # Evaluation/inference script
-└── README.md               # This document
+├── data/             # Raw and processed datasets
+├── features/         # Feature extraction scripts
+├── models/           # Model definitions and training modules
+├── utils/            # Data loaders, metrics, augmentations
+├── configs/          # YAML/JSON hyperparameter files
+├── logs/             # TensorBoard training logs
+├── checkpoints/      # Saved model weights
+├── requirements.txt  # Python dependencies
+├── train.py          # Training entry point
+├── evaluate.py       # Evaluation & inference script
+└── README.md         # This document
 
-## Quick Start
+⚙️ Quick Start
+1️⃣ Clone & Install
+git clone https://github.com/yourusername/speech-emotion-recognition.git
+cd speech-emotion-recognition
+conda create -n ser_env python=3.8 -y
+conda activate ser_env
+pip install -r requirements.txt
 
-1. **Clone & Install**
-   git clone [https://github.com/yourusername/speech-emotion-recognition.git](https://github.com/yourusername/speech-emotion-recognition.git)
-   cd speech-emotion-recognition
-   conda create -n ser\_env python=3.8 -y
-   conda activate ser\_env
-   pip install -r requirements.txt
+2️⃣ Prepare Data
 
-2. **Prepare Data**
+Organize your dataset as:
 
-   * Place audio in data/{Dataset}/wavs/ and labels in data/{Dataset}/labels.csv (file\_name,emotion\_label).
-   * Preprocess to 16 kHz mono:
-     python utils/data\_loader.py --dataset EMOVO --output\_dir data/EMOVO/processed/
+data/{Dataset}/
+├── wavs/              # Audio files (.wav)
+└── labels.csv         # file_name,emotion_label
 
-3. **Extract Features**
 
-   * MFCC example:
-     python features/extract\_mfcc.py --input\_dir data/EMOVO/processed/wavs/ --output\_dir features/EMOVO/mfcc/ --n\_mfcc 40
-   * eGeMAPS/eSAC example:
-     python features/extract\_egemaps.py --input\_dir data/EMODB/processed/wavs/ --output\_dir features/EMODB/egemaps/
+Preprocess to 16kHz mono:
 
-4. **Train**
-   python train.py --config configs/default\_config.yaml --dataset EMOVO --feature mfcc --model cnn\_rnn
-   Checkpoints saved under checkpoints/{dataset}/{model}/.
+python utils/data_loader.py --dataset EMOVO --output_dir data/EMOVO/processed/
 
-5. **Evaluate / Infer**
+3️⃣ Extract Features
 
-   * Batch evaluation:
-     python evaluate.py --config configs/default\_config.yaml --dataset EMOVO --feature mfcc --model cnn\_rnn --checkpoint checkpoints/EMOVO/cnn\_rnn/best\_model.pt
-   * Single-file inference:
-     python evaluate.py --infer --wav\_path path/to/audio.wav --feature mfcc --model cnn\_rnn --checkpoint checkpoints/EMOVO/cnn\_rnn/best\_model.pt
+MFCC example:
 
-## Configuration & Logging
+python features/extract_mfcc.py \
+  --input_dir data/EMOVO/processed/wavs/ \
+  --output_dir features/EMOVO/mfcc/ \
+  --n_mfcc 40
 
-* Edit hyperparameters in configs/\*.yaml.
-* Training logs saved in logs/{dataset}/{model}/. Launch TensorBoard:
-  tensorboard --logdir logs/
 
-## Add a New Dataset
+eGeMAPS/eSAC example:
 
-1. Add data/YourDataset/wavs/ and labels.csv.
-2. Update utils/data\_loader.py to handle YourDataset.
-3. Run training with --dataset YourDataset.
+python features/extract_egemaps.py \
+  --input_dir data/EMODB/processed/wavs/ \
+  --output_dir features/EMODB/egemaps/
 
-## Dependencies
+4️⃣ Train a Model
+python train.py \
+  --config configs/default_config.yaml \
+  --dataset EMOVO \
+  --feature mfcc \
+  --model cnn_rnn
 
+
+Checkpoints are saved under:
+
+checkpoints/{dataset}/{model}/best_model.pt
+
+5️⃣ Evaluate or Infer
+
+Batch evaluation:
+
+python evaluate.py \
+  --config configs/default_config.yaml \
+  --dataset EMOVO \
+  --feature mfcc \
+  --model cnn_rnn \
+  --checkpoint checkpoints/EMOVO/cnn_rnn/best_model.pt
+
+
+Single-file inference:
+
+python evaluate.py \
+  --infer \
+  --wav_path path/to/audio.wav \
+  --feature mfcc \
+  --model cnn_rnn \
+  --checkpoint checkpoints/EMOVO/cnn_rnn/best_model.pt
+
+🧩 Configuration & Logging
+
+Modify hyperparameters in configs/*.yaml
+
+TensorBoard logs are saved under logs/{dataset}/{model}/
+
+Launch TensorBoard:
+
+tensorboard --logdir logs/
+
+🧱 Add a New Dataset
+
+Create a folder data/YourDataset/ with:
+
+wavs/        # all audio files
+labels.csv   # file_name, emotion_label
+
+
+Update utils/data_loader.py to support loading your dataset
+
+Train with:
+
+python train.py --dataset YourDataset
+
+🧮 Dependencies
 torch>=1.8.0
 torchaudio
 librosa
@@ -90,10 +156,21 @@ tensorboard
 PyYAML
 tqdm
 
+
 Install with:
+
 pip install -r requirements.txt
 
-## Acknowledgments
+🔬 Reproducibility & Extensibility
 
-Thanks to the authors of EMOVO, EMODB, German Emotional Speech, and all referenced works for inspiration and resources. Contributions and feedback are welcome!
+Deterministic training seeds and dataset splits
+
+Modular design — easily swap models, features, or datasets
+
+Compatible with transfer learning and multimodal emotion research
+
+🙏 Acknowledgments
+
+This repository builds upon prior work in speech emotion recognition research and open datasets including EMOVO, EMODB, and German Emotional Speech.
+Contributions, improvements, and extensions are welcome via pull requests!
 
