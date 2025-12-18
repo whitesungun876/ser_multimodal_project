@@ -52,7 +52,6 @@ This project addresses three core hypotheses:
 **Text:** IEMOCAP manual transcripts processed via `bert-base-uncased` WordPiece tokenizer.
 
 
-* 
 **SpecAugment:** Time and frequency masking applied during training to improve robustness.
 
 
@@ -85,22 +84,16 @@ Results are reported as **Macro-F1 (Mean ± Std)** across 5-fold speaker-indepen
 | --- | --- |
 | Audio Transformer (Speech-only) | <br>0.554 \pm 0.030 
 
- |
 | CNN + BiLSTM (Speech-only) | <br>0.603 \pm 0.022 
 
- |
 | **ResNet-18 (Speech-only)** | <br>**0.613 \pm 0.025** 
 
- |
 | Early Fusion (Audio + Text) | <br>0.672 \pm 0.018 
 
- |
 | Cross-Attention Fusion | <br>0.700 \pm 0.020 
 
- |
 | **Cross-Attention + Class-Diff. Augmentation** | <br>**0.927 \pm 0.012** 
 
- |
 
 ---
 
