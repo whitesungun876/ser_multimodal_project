@@ -8,15 +8,12 @@ This repository contains the experimental framework for **"Multimodal Speech Emo
 
 This project addresses three core hypotheses:
 
-* 
 **H1 (Multimodal Fusion):** Combining audio and text signals yields higher performance than unimodal baselines.
 
 
-* 
 **H2 (Architecture):** Deep convolutional models (ResNet-18) can match or exceed Transformer-based architectures on moderate-scale datasets when trained from scratch.
 
 
-* 
 **H3 (Augmentation):** Class-differentiated data augmentation substantially improves performance on imbalanced emotion classes.
 
 
@@ -27,38 +24,31 @@ This project addresses three core hypotheses:
 
 ### 🧠 Model Architectures
 
-* 
 **ResNet-18 (CNN-only):** Strong baseline for extracting local spectral patterns from Mel spectrograms.
 
 
-* 
 **CNN + BiLSTM:** Captures both local spectral information and temporal dependencies.
 
-
-* 
+ 
 **Audio Transformer:** Patch-based self-attention mechanism applied to spectrograms.
 
 
-* 
 **Text-only:** Frozen **BERT** ([CLS] token) followed by an MLP.
 
 
-* 
 **Early Fusion:** Feature-level concatenation of audio and text embeddings.
 
 
-* 
 **Patch-based Cross-Attention Fusion:** Fine-grained alignment of audio patches and text tokens.
 
 
 
 ### 🎵 Audio & Text Processing
 
-* 
+
 **Audio:** 16 kHz mono resampling, 64-band Mel spectrograms (25ms window, 10ms hop), and Z-score normalization.
 
 
-* 
 **Text:** IEMOCAP manual transcripts processed via `bert-base-uncased` WordPiece tokenizer.
 
 
@@ -71,19 +61,16 @@ This project addresses three core hypotheses:
 
 We implement a **Class-Differentiated Pipeline** that applies tailored augmentations per emotion to address dataset imbalance:
 
-* 
+
 **Angry:** Heavy pitch shifts (\pm3 semitones) and intense SpecAugment.
 
 
-* 
 **Happy:** Environmental noise overlay (MUSAN) and mild pitch/time variations.
 
 
-* 
 **Sad:** Room reverb simulation and pink noise addition.
 
 
-* 
 **Neutral:** Gaussian noise and slight SpecAugment.
 
 
@@ -121,13 +108,10 @@ Results are reported as **Macro-F1 (Mean ± Std)** across 5-fold speaker-indepen
 
 The primary dataset used is the **IEMOCAP** corpus:
 
-* 
 **Size:** 5,531 utterances (~10 hours).
 
 
-* 
 **Classes:** Angry (1,103), Happy (1,200), Sad (1,665), Neutral (1,563).
-
 
 
 **Expected Directory Structure:**
@@ -198,15 +182,13 @@ python train.py \
 
 ## 🔬 Research & Reproducibility
 
-* 
+ 
 **Ablation Ready:** The codebase supports toggling SpecAugment, basic audio augmentation, and class-specific policies.
 
 
-* 
 **Explainability:** Support for generating **Class Activation Maps (CAMs)** and attention heatmaps to verify emotional salience.
 
 
-* 
 **Speaker-Independent:** Evaluation strictly follows 5-fold CV where one session (2 actors) is held out for testing per fold.
 
 
